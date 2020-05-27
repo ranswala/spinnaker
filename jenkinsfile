@@ -1,0 +1,24 @@
+pipeline {  
+      agent any
+      tools {
+        maven 'maven3'
+      }
+      stages {
+          stage('build') {
+              steps{
+                sh script: 'mvn clean package' # This will create a war file.
+              }
+          }
+          stage('docker image'){
+              sh 'docker build -t ranswala/my-app:1.0 .'  # Creates the docker image
+
+          }
+          stage('docker push'){
+            withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+              sh "docker login -u ranswala -p ${dockerhub}"
+            }
+              sh 'docker push ranswala/my-app:1.0'     # Push image to dockerhub
+          }
+
+      }
+}

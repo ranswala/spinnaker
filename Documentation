@@ -1,0 +1,19 @@
+:-continous integration (CI) is done by jenkins
+
+Users----> GIT----> jenkins server---->Build-docker-image
+                                        and push to dockerhub
+
+For continous integration we require following:
+
+1. Jenkinsfile
+2. Dockerfile
+
+:-Continous deployment(CD) will be done by spinnaker.
+
+In our spinnaker pipeline we will add the triggers( jenkins build job)
+When the build jobs complete, we our spinnaker pipeline will start and it will deploy to kubernetes cluster.
+
+For continous deployment we require following:
+
+1. Deployment manifest
+2. Service manifest
